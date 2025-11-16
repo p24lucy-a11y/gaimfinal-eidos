@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Eidos – BrandKit Generator</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --bg: #0b1020;
+      --card-bg: #12172a;
+      --accent: #7c5cff;
+      --accent-soft: rgba(124, 92, 255, 0.14);
+      --text: #f7f7ff;
+      --muted: #9da3c2;
+      --border: #242944;
+      --danger: #ff4b81;
+      --radius-xl: 18px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+      background: radial-gradient(circle at top, #1b2342 0, #050714 55%, #02030a 100%);
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .shell {
+      width: 100%;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    .card {
+      background: linear-gradient(145deg, rgba(255, 255, 255, 0.02), rgba(0, 0, 0, 0.4));
+      border-radius: 24px;
+      padding: 26px 26px 22px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      box-shadow: 0 24px 80px rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(20px);
+    }
+
+    .top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 22px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand-mark {
+      width: 28px;
+      height: 28px;
+      border-radius: 999px;
+      background: conic-gradient(from 210deg, #7c5cff, #ff8ac2, #45f5ff, #7c5cff);
+      padding: 2px;
+      box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.06);
+    }
+
+    .brand-mark-inner {
+      width: 100%;
+      height: 100%;
+      border-radius: inherit;
+      background: radial-gradient(circle at 20% 0, rgba(255, 255, 255, 0.35), rgba(6, 9, 29, 0.9));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      color: var(--text);
+    }
+
+    .brand-text-title {
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .brand-text-sub {
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .pill {
+      font-size: 11px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: radial-gradient(circle at 0 0, rgba(255, 255, 255, 0.18), rgba(4, 7, 26, 0.9));
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+      gap: 22px;
+    }
+
+    @media (max-width: 780px) {
+      .layout {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      body {
+        padding: 16px;
+      }
+      .card {
+        padding: 20px 18px 18px;
+      }
+    }
+
+    h1 {
+      font-size: 28px;
+      letter-spacing: -0.03em;
+      margin: 0 0 6px;
+    }
+
+    .lede {
+      margin: 0 0 14px;
+      color: var(--muted);
+      font-size: 13px;
+      max-width: 38rem;
+    }
+
+    .hint {
+      font-size: 11px;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .hint-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 0, #aaf0ff, #45f5ff);
+      box-shadow: 0 0 10px rgba(69, 245, 255, 0.74);
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 10px;
+    }
+
+    .field-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    label {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: var(--muted);
+    }
+
+    input[type="text"],
+    textarea {
+      width: 100%;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      background: rgba(4, 7, 26, 0.85);
+      color: var(--text);
+      font-size: 13px;
+      padding: 9px 10px;
+      outline: none;
+      resize: vertical;
+      min-height: 0;
+    }
+
+    input[type="text"]:focus,
+    textarea:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 1px rgba(124, 92, 255, 0.5);
+    }
+
+    textarea {
+      min-height: 64px;
+      line-height: 1.5;
+    }
+
+    .row-2 {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    @media (max-width: 600px) {
+      .row-2 {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .submit-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .btn-primary {
+      border: none;
+      cursor: pointer;
+      border-radius: 999px;
+      padding: 9px 18px;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      background: radial-gradient(circle at 0 0, #ffe8ff, #ff8ac2);
+      color: #140519;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 14px 35px rgba(0, 0, 0, 0.8);
+    }
+
+    .btn-primary span.icon {
+      font-size: 15px;
+      transform: translateY(0.5px);
+    }
+
+    .submit-hint {
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .sidebar {
+      border-radius: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: radial-gradient(circle at 0 0, rgba(255, 255, 255, 0.12), rgba(7, 9, 31, 0.96));
+      padding: 14px 14px 12px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .sidebar h2 {
+      font-size: 13px;
+      margin: 0 0 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--text);
+    }
+
+    .sidebar ul {
+      margin: 0;
+      padding-left: 18px;
+    }
+
+    .sidebar li {
+      margin-bottom: 4px;
+    }
+
+    .sidebar-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      padding: 5px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(3, 8, 31, 0.88);
+      margin-top: 8px;
+    }
+
+    .sidebar-tag-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: var(--accent);
+    }
+
+    .footer-note {
+      margin-top: 10px;
+      font-size: 10px;
+      color: var(--muted);
+      display: flex;
+      justify-content: flex-end;
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <div class="card">
+      <div class="top-bar">
+        <div class="brand">
+          <div class="brand-mark">
+            <div class="brand-mark-inner">E</div>
+          </div>
+          <div>
+            <div class="brand-text-title">Eidos</div>
+            <div class="brand-text-sub">BrandKit Generator · powered by AI</div>
+          </div>
+        </div>
+        <div class="pill">Step 1 · Describe your brand</div>
+      </div>
+
+      <div class="layout">
+        <div>
+          <h1>Generate a starter brand system in one step.</h1>
+          <p class="lede">
+            Eidos will take this snapshot of your brand and return a complete starter identity: color palette,
+            font pairing, logo concept, and messaging scaffold – ready to refine in your design tool of choice.
+          </p>
+          <div class="hint">
+            <div class="hint-dot"></div>
+            <span>Answer like you would explain the brand to a designer friend.</span>
+          </div>
+
+          <form action="https://hook.eu1.make.com/vlyy9tpc6pof1styjb526avbzpmvi76l" method="post">
+            <div class="field-group">
+              <label for="brand_name">Brand name</label>
+              <input type="text" id="brand_name" name="brand_name" placeholder="e.g. Kamla Cafe" required />
+            </div>
+
+            <div class="row-2">
+              <div class="field-group">
+                <label for="audience">Primary audience</label>
+                <input
+                  type="text"
+                  id="audience"
+                  name="audience"
+                  placeholder="e.g. College students in a campus neighborhood"
+                  required
+                />
+              </div>
+              <div class="field-group">
+                <label for="tone">Desired brand tone</label>
+                <input
+                  type="text"
+                  id="tone"
+                  name="tone"
+                  placeholder="e.g. warm, simple, no-nonsense"
+                  required
+                />
+              </div>
+            </div>
+
+            <div class="field-group">
+              <label for="values">Core values / positioning</label>
+              <textarea
+                id="values"
+                name="values"
+                placeholder="e.g. homely food, hygiene, affordability, run by women self-help group"
+                required
+              ></textarea>
+            </div>
+
+            <div class="submit-row">
+              <button class="btn-primary" type="submit">
+                <span class="icon">⚡</span>
+                <span>Generate with Eidos</span>
+              </button>
+              <div class="submit-hint">On submit, Eidos calls your Make.com scenario and renders a brand kit page.</div>
+            </div>
+          </form>
+        </div>
+
+        <aside class="sidebar">
+          <h2>What Eidos will return</h2>
+          <ul>
+            <li>Brand summary &amp; slogan</li>
+            <li>5-color palette with hex codes</li>
+            <li>Google Fonts heading + body pairing</li>
+            <li>Logo concept description</li>
+            <li>Business card, letterhead &amp; banner concepts</li>
+          </ul>
+
+          <div class="sidebar-tag">
+            <div class="sidebar-tag-dot"></div>
+            <span>Backend: Make.com webhook → Groq (Eidos) → HTML brand kit</span>
+          </div>
+        </aside>
+      </div>
+
+      <div class="footer-note">Tip: host this as a static file or open locally; the form posts directly to your Make webhook.</div>
+    </div>
+  </div>
+</body>
+</html>
